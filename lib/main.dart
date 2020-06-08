@@ -21,6 +21,8 @@ class MyHomePage extends StatelessWidget {
         id: 't2', title: 'new sandal', amount: 39, date: DateTime.now()),
     Transaction(id: 't3', title: 'new car', amount: 9999, date: DateTime.now()),
   ];
+  String titleInput;
+  String amountInput;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class MyHomePage extends StatelessWidget {
           title: Text('Flutter App'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
@@ -40,6 +42,34 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
+            Card(
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(labelText: 'Title'),
+                        onChanged: (val) {
+                          titleInput = val;
+                        },
+                      ),
+                      TextField(
+                        decoration: InputDecoration(labelText: 'Amount'),
+                        onChanged: (val) => amountInput = val,
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          print(titleInput);
+                          print(amountInput);
+                        },
+                        child: Text('Add Transaction'),
+                        textColor: Colors.purple,
+                      ),
+                    ],
+                  ),
+                )),
             Column(
               children: transactions.map((tx) {
                 return Card(
@@ -52,7 +82,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          color: Colors.purple,
                           width: 2,
                         ),
                       ),
@@ -76,7 +106,7 @@ class MyHomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold)),
                         ),
                         Text(
-                          tx.date.toString(),
+                          DateFormat.yMMMd().format(tx.date),
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey,
