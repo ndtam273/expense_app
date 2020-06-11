@@ -17,13 +17,23 @@ class _UserTransactionsState extends State<UserTransactions> {
   ];
 
   void _addNewTransaction(String txTitle, double txAmount) {
-    final newtx = Transaction(id: DateTime.now().toString(), title: txTitle , amount: txAmount, date: DateTime.now())
+    final newtx = Transaction(
+        id: DateTime.now().toString(),
+        title: txTitle,
+        amount: txAmount,
+        date: DateTime.now());
+
+        setState(() {
+          _userTransaction.add(newtx);
+        });
+
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        NewTransaction(),
+        NewTransaction(_addNewTransaction),
         TransactionList(_userTransaction),
       ],
     );
