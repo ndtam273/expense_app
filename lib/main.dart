@@ -21,13 +21,17 @@ class MyApp extends StatelessWidget {
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.w500,
                     fontSize: 15),
+                button: TextStyle(
+                  color: Colors.white,
+                ),
               ),
           appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20)))),
+                    headline6: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ))),
       home: MyHomePage(),
     );
   }
