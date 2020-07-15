@@ -7,7 +7,9 @@ import './chart_bar.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
 
-  Chart(this.recentTransactions);
+  Chart(this.recentTransactions) {
+    print('Constructor Chart');
+  }
 
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(7, (index) {
@@ -38,6 +40,8 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        print('build() Chart');
+
     print(groupedTransactionValues);
     return Container(
       height: MediaQuery.of(context).size.height * 0.4,

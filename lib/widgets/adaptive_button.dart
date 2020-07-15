@@ -11,6 +11,7 @@ class AdaptiveFlatButton extends StatelessWidget {
   AdaptiveFlatButton(this.text, this.handler);
   @override
   Widget build(BuildContext context) {
+     print('build() Adpative Button');
     return Platform.isIOS
         ? CupertinoButton(
             child: Text(text,
