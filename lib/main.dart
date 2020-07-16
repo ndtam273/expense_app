@@ -113,13 +113,41 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    print('build() MyHomepage');
-    final mediaquery = MediaQuery.of(context);
-    final isLandscape = mediaquery.orientation == Orientation.landscape;
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
+  List<Widget> _buildLandscapeContent(MediaQueryData mediaquery, AppBar appBar, Widget txListWidget) {
+      return [Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Show chart', style: Theme.of(context).textTheme.headline6),
+                Switch.adaptive(
+                  value: _showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  },
+                ),
+              ],
+            ), _showChart
+                ? Container(
+                    height: (mediaquery.size.height -
+                            appBar.preferredSize.height -
+                            mediaquery.padding.top) *
+                        0.7,
+                    child: Chart(_recentTransactions))
+                : txListWidget];
+  }
+
+  List<Widget> _buildPortraitContent(MediaQueryData mediaquery, AppBar appBar, Widget txListWidget) {
+    return  [Container(
+                height: (mediaquery.size.height -
+                        appBar.preferredSize.height -
+                        mediaquery.padding.top) *
+                    0.2,
+                child: Chart(_recentTransactions)), txListWidget ];
+  }
+
+  Widget _buildCupertinoNavigationBar() {
+    return CupertinoNavigationBar(
             middle: Text(
               'Personal Expense',
             ),
@@ -131,8 +159,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Icon(CupertinoIcons.add)),
               ],
             ),
-          )
-        : AppBar(
+          );
+  }
+
+  Widget _buildMaterialNavigationBar()  {
+    return AppBar(
             title: Text(
               'Personal Expenses',
             ),
@@ -143,6 +174,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           );
+  }
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    print('build() MyHomepage');
+    final mediaquery = MediaQuery.of(context);
+    final isLandscape = mediaquery.orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? _buildCupertinoNavigationBar()
+        : _buildMaterialNavigationBar();
 
     final txListWidget = Container(
         height: (mediaquery.size.height -
@@ -156,38 +200,9 @@ print(appBar.preferredSize.height);
         // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          if (isLandscape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Show chart', style: Theme.of(context).textTheme.headline6),
-                Switch.adaptive(
-                  value: _showChart,
-                  onChanged: (val) {
-                    setState(() {
-                      _showChart = val;
-                    });
-                  },
-                ),
-              ],
-            ),
-          if (!isLandscape)
-            Container(
-                height: (mediaquery.size.height -
-                        appBar.preferredSize.height -
-                        mediaquery.padding.top) *
-                    0.2,
-                child: Chart(_recentTransactions)),
-          if (!isLandscape) txListWidget,
-          if (isLandscape)
-            _showChart
-                ? Container(
-                    height: (mediaquery.size.height -
-                            appBar.preferredSize.height -
-                            mediaquery.padding.top) *
-                        0.7,
-                    child: Chart(_recentTransactions))
-                : txListWidget,
+          if (isLandscape) ..._buildLandscapeContent(mediaquery, appBar, txListWidget),
+          if (!isLandscape) ..._buildPortraitContent(mediaquery, appBar, txListWidget),
+
         ],
       ),
     ),);
