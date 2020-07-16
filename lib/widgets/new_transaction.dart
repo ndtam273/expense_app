@@ -15,14 +15,14 @@ class NewTransaction extends StatefulWidget {
   _NewTransactionState createState() {
     print('CreateState NewTransaction Widget');
     return _NewTransactionState();
-  } 
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _selectedDate;
-  
+
   _NewTransactionState() {
     print('Constructor NewTransaction State');
   }
@@ -30,22 +30,22 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   void initState() {
     // TODO: implement initState
-    print('initState()');
     super.initState();
+    print('initState()');
   }
 
   @override
   void didUpdateWidget(NewTransaction oldWidget) {
     // TODO: implement didUpdateWidget
-    print('didUpdateWidget');
     super.didUpdateWidget(oldWidget);
+    print('didUpdateWidget');
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    print('DisposeWidget');
     super.dispose();
+    print('DisposeWidget');
   }
 
   void _submitData() {
@@ -116,7 +116,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             : 'Picked Date: ${DateFormat.yMMMMd().format(_selectedDate)}',
                       ),
                     ),
-                  AdaptiveFlatButton('Choose Date', _presentDatePicker),
+                    AdaptiveFlatButton('Choose Date', _presentDatePicker),
                   ],
                 ),
               ),
