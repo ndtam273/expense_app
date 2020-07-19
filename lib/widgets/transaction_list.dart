@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        print('build() Transaction List');
+    print('build() Transaction List');
 
     return transactions.isEmpty
         ? LayoutBuilder(builder: (ctx, constraints) {
@@ -33,13 +33,12 @@ class TransactionList extends StatelessWidget {
               ],
             );
           })
-        : ListView.builder(
-            itemBuilder: (ctx, index) {
-              return TransactionItem(transaction: transactions[index], deleteTx: deleteTx);
-            },
-            itemCount: transactions.length,
-          );
+        : ListView(
+            children: transactions
+                .map((tx) => TransactionItem(
+                    key: ValueKey(tx.id), 
+                    transaction: tx, 
+                    deleteTx: deleteTx))
+                .toList());
   }
 }
-
-
